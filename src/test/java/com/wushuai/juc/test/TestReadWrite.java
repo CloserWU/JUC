@@ -1,10 +1,8 @@
 package com.wushuai.juc.test;
 
-import org.junit.Test;
-
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
@@ -20,7 +18,7 @@ public class TestReadWrite {
 
     ReadWriteLock lock = new ReentrantReadWriteLock();
 
-    volatile HashMap<Integer, String> memo = new HashMap<>();
+    volatile Map<Integer, String> memo = new HashMap<>();
 
     public static void main(String[] args) {
         TestReadWrite o = new TestReadWrite();
@@ -46,6 +44,7 @@ public class TestReadWrite {
 
     void read(int key) {
         lock.readLock().lock();
+        lock.readLock().lock();
         try {
             System.out.println("begin read");
             Thread.sleep(150);
@@ -54,6 +53,7 @@ public class TestReadWrite {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
+            lock.readLock().unlock();
             lock.readLock().unlock();
         }
     }
